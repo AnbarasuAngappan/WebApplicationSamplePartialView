@@ -285,6 +285,8 @@
     <Content Include="Views\Home\Returnpartialview.cshtml" />
     <Content Include="Views\Home\Jquerry.cshtml" />
     <Content Include="Views\Home\Postdata.cshtml" />
+    <Content Include="Views\Home\Delete.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

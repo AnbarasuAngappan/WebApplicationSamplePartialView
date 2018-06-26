@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -28,14 +29,12 @@ namespace WebApplicationSamplePartialView.Controllers
             return View();
         }
 
-
         public ActionResult List()
         {
             List<PartialView> partialViews = entities.PartialViews.ToList();
             return View(partialViews);
 
         }
-
 
         public ActionResult Returnpartialview()
         {
@@ -56,7 +55,6 @@ namespace WebApplicationSamplePartialView.Controllers
 
             return View();//partialView
         }
-
       
         public ActionResult Postdata()
         {
@@ -76,6 +74,7 @@ namespace WebApplicationSamplePartialView.Controllers
                     entities.PartialViews.Add(partialView);
                     entities.SaveChanges();
                     partialView.partialviewDBItems = entities.PartialViews.ToList();
+                    //return RedirectToAction("Postdata");
                     return View(partialView);
                 }
 
@@ -87,5 +86,54 @@ namespace WebApplicationSamplePartialView.Controllers
             }           
 
         }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PartialView partialView = entities.PartialViews.Find(id);
+            if (partialView == null)
+            {
+                return HttpNotFound();
+            }
+            return View(partialView);
+        }
+
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int? id)
+        {
+            PartialView partialView = entities.PartialViews.Find(id);
+            entities.PartialViews.Remove(partialView);
+            entities.SaveChanges();
+            return RedirectToAction("Postdata");
+        }
+
+
+        public ActionResult Details(int? id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                PartialView partialView = entities.PartialViews.Find(id);
+                if (partialView == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(partialView);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+
     }
 }
