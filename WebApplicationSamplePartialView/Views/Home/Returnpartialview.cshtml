@@ -1,0 +1,47 @@
+﻿@*@model WebApplicationSamplePartialView.PartialView*@
+<h2>
+    Student Details From partial View
+</h2>
+
+<table>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Gender
+        </th>
+        <th>
+            City
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Name
+            </td>
+
+            <td>
+                @item.Gender
+            </td>
+            <td>
+                @item.City
+            </td>
+        </tr>
+    }
+
+</table>
+
+@*<ul>
+
+    
+
+    @foreach (var item in Model)
+    {
+        <li>@item.Name</li>
+        <li>@item.Gender</li>
+        <li>@item.City</li>
+    }
+</ul>*@

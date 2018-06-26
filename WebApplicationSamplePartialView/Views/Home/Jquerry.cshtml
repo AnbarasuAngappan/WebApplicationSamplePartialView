@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Jquerry";
+}
+
+<h2>Jquerry</h2>
+
+
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+
+
+<script type="text/javascript">
+     @Model.JavascriptToRun  
+
+     function ShowErrorPopup() {
+          alert('Sorry, we could not process your order.');
+    }
+
+     //$(function ShowErrorPopup() {
+    //    $("#dialog_sample").dialog({
+    //        //autoOpen: false,
+    //        width: 650,
+    //        height: 450,
+    //        show: {
+    //            effect: "shake",
+    //            duration: 100
+    //        },
+    //        hide: {
+    //            effect: "explode",
+    //            duraion: 500
+
+    //        }
+    //    });
+
+</script>
