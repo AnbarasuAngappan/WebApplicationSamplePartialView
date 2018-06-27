@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -133,6 +134,22 @@ namespace WebApplicationSamplePartialView.Controllers
                 throw new Exception(ex.Message);
             }
 
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(PartialView partialView)//[Bind(Include = "CustomerID,CustomerName,ContactMidName,PhoneNumber,EmailID,Password,ConfirmPassword")]Customer customer
+        {
+            if (ModelState.IsValid)
+            {
+                //PartialView partialView = new PartialView();
+                UpdateModel(partialView);//UpdateModel<Customer>(customers);
+                entities.Entry(partialView).State = EntityState.Modified;
+                entities.SaveChanges();
+                partialView.partialviewDBItems = entities.PartialViews.ToList();
+                return View("Postdata");
+            }
+            return View();
         }
 
     }

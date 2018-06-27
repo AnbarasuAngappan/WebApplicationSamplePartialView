@@ -17,12 +17,12 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>@*If we not include this script source mean, my click event is not fired*@
 
 
-<div class="container" style="width:30%;margin-top:2%">
+<div id="main" class="container" style="width:30%;margin-top:2%">
     <a href="a" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Create</a>
     <br />
     <br /> 
 
-    <table width="500" class="table-hover">
+    <table id="Data" width="500" class="table-hover">
         <tr>
             <th>
                 @Html.Name("Emp ID")
@@ -74,14 +74,14 @@
                 </div>
 
                 <div class="modal-body">
-                    <form id="myForm">
-                        @Html.TextBoxFor(model => model.ID, new { @class = "form-control", @placeholder = "ID" })
+                    <form id="myForm">                        
+                        @Html.TextBoxFor(model => model.ID, new {maxlength = "50", @class = "form-control"})
                         @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Name" })
                         @Html.TextBoxFor(model => model.Gender, new { @class = "form-control", @placeholder = "Gender" })
                         @Html.TextBoxFor(model => model.City, new { @class = "form-control", @placeholder = "City" })
                     </form>
                     <div style="text-align:center;display:none" id="loader-Div">
-                        <img src="~/Content/themes/base/images/InternetSlowdown_Day.gif" />
+                        <img src="~/Content/themes/base/images/InternetSlowdown_Day.gif" width="50" height="50" />
                     </div>
                 </div>
 
@@ -97,7 +97,7 @@
 </div>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function (e) {
         $("#btnSubmit").click(function () {
             $("#loader-Div").show();
             var myformdata = $("#myForm").serialize();
@@ -106,12 +106,23 @@
                 type: "POST",
                 url:"/Home/Postdata",
                 data: myformdata,
-                success: function () {
+                success: function (result) {
                     $("#loader-Div").hide();
                     $("#myModal").modal("hide");
-                    @*@Url.Action("List","Home")*@
+                    @*@Url.Action("List","Home")*@         
+
+                    $("input").each(function () {
+                        $(this).val("");
+                    });
+
+                    //$("#main").html(result);             
+
                 }
             })
+            e.preventDefault();
+                //.done(function (data) {
+                //    jQuery('#Data').html(data);
         })
     })
+    
 </script>
