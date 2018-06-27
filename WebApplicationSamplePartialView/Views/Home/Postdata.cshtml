@@ -105,24 +105,33 @@
             $.ajax({
                 type: "POST",
                 url:"/Home/Postdata",
-                data: myformdata,
+                data: myformdata,               
                 success: function (result) {
-                    $("#loader-Div").hide();
-                    $("#myModal").modal("hide");
-                    @*@Url.Action("List","Home")*@         
+                    if (result.status === 'OK')
+                    {
+                        $("#loader-Div").hide();
+                        $("#myModal").modal("hide");
+                        @*@Url.Action("List", "Home") *@
 
-                    $("input").each(function () {
-                        $(this).val("");
-                    });
-
-                    //$("#main").html(result);             
-
-                }
+                        $("input").each(function () {
+                            $(this).val("");
+                        });
+                        alert("Data Inserted Successfully");
+                        window.location.href = result.Url
+                        //$("#main").html(result);
+                    }
+                    else
+                    {
+                        alert("The status cannot be updated at this time");
+                    }
+                  
+                },
+                Error: function () { alert("Hii"); }
             })
             e.preventDefault();
                 //.done(function (data) {
                 //    jQuery('#Data').html(data);
         })
-    })
+    })     
     
 </script>
