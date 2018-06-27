@@ -92,20 +92,25 @@
                 url:"/Home/Edit",
                 data: myformdata,
                 success: function (result) {
-                    $("#loader-Div").hide();
-                    $("#myModal").modal("hide");
-                    @*@Url.Action("List","Home")*@
+                    if (result.status === 'OK')
+                    {
+                        $("#loader-Div").hide();
+                        $("#myModal").modal("hide");
 
-                    $("input").each(function () {
-                        $(this).val("");
-                    });
-                    //$("#main").html(result);
+                        $("input").each(function () {
+                            $(this).val("");
+                        });
+                        alert("Record Updated Successfully");
+                        window.location.href = result.Url
+                    }
+                    else
+                    {
+                        alert("The status cannot be updated at this time");
+                    }                   
                 },
                 Error: function () { alert("Hii");}
             })
-            e.preventDefault();
-                //.done(function (data) {
-                //    jQuery('#Data').html(data);
+            e.preventDefault();             
         })
     })
 

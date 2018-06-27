@@ -86,7 +86,6 @@ namespace WebApplicationSamplePartialView.Controllers
             catch (Exception ex)
             {
                 return Json(new { Url = redirectUrl, status = "Error" });
-
                 throw new Exception(ex.Message);
             }
 
@@ -162,16 +161,28 @@ namespace WebApplicationSamplePartialView.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(PartialView partialView)//[Bind(Include = "CustomerID,CustomerName,ContactMidName,PhoneNumber,EmailID,Password,ConfirmPassword")]Customer customer
         {
-            if (ModelState.IsValid)
+            var redirectUrl1 = new UrlHelper(Request.RequestContext).Action("Postdata", "Home", new { });
+            try
             {
-                //PartialView partialView = new PartialView();
-                UpdateModel(partialView);//UpdateModel<Customer>(customers);
-                entities.Entry(partialView).State = EntityState.Modified;
-                entities.SaveChanges();
-                partialView.partialviewDBItems = entities.PartialViews.ToList();
-                return View("Details");
+                if (ModelState.IsValid)
+                {
+                    //PartialView partialView = new PartialView();
+                    UpdateModel(partialView);//UpdateModel<Customer>(customers);
+                    entities.Entry(partialView).State = EntityState.Modified;
+                    entities.SaveChanges();
+                    partialView.partialviewDBItems = entities.PartialViews.ToList();                    
+                }               
             }
-            return View();
+            catch (Exception ex)
+            {
+                return Json(new { Url = redirectUrl1, status = "Error" });
+                throw new Exception(ex.Message);
+            }
+
+            return Json(new { Url = redirectUrl1, status = "OK" });
+
+
+
         }
 
     }
