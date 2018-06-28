@@ -11,6 +11,7 @@ namespace WebApplicationSamplePartialView.Controllers
     public class HomeController : Controller
     {
         private SamplePartialViewDataEntities entities = new SamplePartialViewDataEntities();
+
         public ActionResult Index()
         {
             return View();
@@ -59,10 +60,18 @@ namespace WebApplicationSamplePartialView.Controllers
       
         public ActionResult Postdata()
         {
-            ViewBag.Message = "Welcome to my demo!";
-            PartialView partialView = new PartialView();
-            partialView.partialviewDBItems = entities.PartialViews.ToList();
-            return View(partialView);
+            try
+            {
+                ViewBag.Message = "Welcome to my demo!";
+                PartialView partialView = new PartialView();
+                partialView.partialviewDBItems = entities.PartialViews.ToList();
+                return View(partialView);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }          
         }
 
         [HttpPost]
@@ -77,11 +86,10 @@ namespace WebApplicationSamplePartialView.Controllers
                     entities.SaveChanges();
                     partialView.partialviewDBItems = entities.PartialViews.ToList();
                     //return RedirectToAction("Postdata");
-                   // return View(partialView);                  
+                    // return View(partialView);                  
                     //return Json(new { Url = redirectUrl });
                 }
-
-                 //return View();
+                //return View();
             }
             catch (Exception ex)
             {
@@ -128,10 +136,18 @@ namespace WebApplicationSamplePartialView.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int? id)
         {
-            PartialView partialView = entities.PartialViews.Find(id);
-            entities.PartialViews.Remove(partialView);
-            entities.SaveChanges();            
-            return RedirectToAction("Postdata");
+            try
+            {
+                PartialView partialView = entities.PartialViews.Find(id);
+                entities.PartialViews.Remove(partialView);
+                entities.SaveChanges();
+                return RedirectToAction("Postdata");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+           
         }
 
 
@@ -178,11 +194,7 @@ namespace WebApplicationSamplePartialView.Controllers
                 return Json(new { Url = redirectUrl1, status = "Error" });
                 throw new Exception(ex.Message);
             }
-
             return Json(new { Url = redirectUrl1, status = "OK" });
-
-
-
         }
 
     }
