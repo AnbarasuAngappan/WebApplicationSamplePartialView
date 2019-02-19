@@ -28,4 +28,19 @@
         <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
+
+
+  
+
+    @*<input type="button" class="btn btn-success" value="Submit" onclick='window.open('/*@Home/CreatePartialView', '_blank', 'left=100,top=100,width=400,height=300,toolbar=1,resizable=0')' />
+
+    <button id="NewBrowserBtn">New Browser</button>
 </div>
+
+<script>
+$(document).ready(function () {
+    $('#NewBrowserBtn').on('click', function () {
+        window.open('/Home/CreatePartialView', '_blank', 'left=100,top=100,width=400,height=300,toolbar=1,resizable=0');
+    });
+});
+</script>
